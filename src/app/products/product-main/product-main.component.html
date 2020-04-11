@@ -1,1 +1,7 @@
-<p>product-main works!</p>
+<nav class="nav justify-content-center">
+  <a class="nav-link active" href="#" [routerLink]="['/products']">Lista</a>
+  <a class="nav-link active" href="#" [routerLink]="['/products/new']">Nuevo producto</a>
+  <a class="nav-link active" href="#" [routerLink]="['/monitoreo']">Monitoreados</a>
+</nav>
+
+<router-outlet></router-outlet>
