@@ -12,8 +12,9 @@
 
 <div class=" mt-2">
   <ul>
-    <app-product [monitoredMode]="monitoredMode"></app-product>
+    <app-product *ngFor="let product of products" [monitoredMode]="monitoredMode" [product]="product"></app-product>
   </ul>
+
 
   <div class="alert alert-danger" role="alert">
     <strong>Ningún producto concuerda con la búsqueda</strong>

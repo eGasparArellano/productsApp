@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Product } from 'src/app/products/Product';
 
 @Component({
   selector: 'app-product',
@@ -7,6 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ProductComponent implements OnInit {
   @Input() monitoredMode: boolean;
+  @Input() product: Product;
 
   constructor() { }
 
