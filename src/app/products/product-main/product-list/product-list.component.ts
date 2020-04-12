@@ -78,6 +78,11 @@ export class ProductListComponent implements OnInit {
   }
 
   deleteProduct(productUid) {
-    this.productsService.deleteMonitoredProduct(productUid);
+    if (this.monitoredMode) {
+      this.productsService.deleteMonitoredProduct(productUid);
+    }
+    else {
+      this.productsService.deleteProduct(productUid);
+    }
   }
 }

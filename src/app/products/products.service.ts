@@ -56,8 +56,17 @@ export class ProductsService {
     this.monitoredProductsSubject.next(this.getMonitoredProducts());
   }
 
-  deleteProduct() {
+  deleteProduct(uid) {
+    // Find and delete element in both lists
+    let searchedProduct = this.products.findIndex((product) => product.uid == uid);
+    this.products.splice(searchedProduct, 1);
 
+    searchedProduct = this.monitoredProducts.findIndex((product) => product.uid == uid);
+    this.monitoredProducts.splice(searchedProduct, 1);
+
+    // Propagate changes
+    this.productsSubject.next(this.getProducts());
+    this.monitoredProductsSubject.next(this.getMonitoredProducts());
   }
 
   deleteMonitoredProduct(uid) {
