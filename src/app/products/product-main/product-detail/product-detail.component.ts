@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ProductsService } from '../../products.service';
+import { Product } from '../../Product';
 
 @Component({
   selector: 'app-product-detail',
@@ -6,10 +9,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./product-detail.component.scss']
 })
 export class ProductDetailComponent implements OnInit {
+  productUid: number;
+  product: Product;
 
-  constructor() { }
+  constructor(private router: Router, private route: ActivatedRoute, private productsService: ProductsService) {
+
+  }
 
   ngOnInit(): void {
+    this.route.params.subscribe(params => this.productUid = params.id);
+    this.product = this.productsService.getProductById(this.productUid);
+    if (this.product === undefined) {
+      this.router.navigate(['/404']);
+    }
   }
 
 }

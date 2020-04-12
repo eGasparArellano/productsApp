@@ -43,6 +43,10 @@ export class ProductsService {
     return monitoredElements;
   }
 
+  getProductById(uid: number): Product {
+    return this.products.find((product) => product.uid == uid);
+  }
+
   updateMonitoredProducts(monitoredProducts) {
     // Update monitored list
     monitoredProducts.forEach((product) => {
