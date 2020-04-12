@@ -11,18 +11,33 @@ import { ProductsService } from '../../products.service';
 export class ProductListComponent implements OnInit {
   monitoredMode: boolean;
   products: Product[] = [];
+  monitoredProducts = [];
   searchString: string;
 
   constructor(private router: Router, private productsService: ProductsService) {
     // Get url
     this.monitoredMode = (this.router.url === '/monitoreo') ? true : false;
 
-    // Get products
-    this.products = this.productsService.getProducts();
+    // Get products depending on the source
+    if (this.monitoredMode) {
+      this.products = this.productsService.getMonitoredProducts();
+    }
+    else {
+      this.products = this.productsService.getProducts();
+    }
 
     // Subscribe to products
     this.productsService.productsSubject.subscribe((newData) => {
-      this.products = newData;
+      if (!this.monitoredMode) {
+        this.products = newData;
+      }
+    });
+
+    // Subscribe to monitored products
+    this.productsService.monitoredProductsSubject.subscribe((newData) => {
+      if (this.monitoredMode) {
+        this.products = newData;
+      }
     });
   }
 
@@ -30,11 +45,39 @@ export class ProductListComponent implements OnInit {
   }
 
   searchProducts(): void {
-    this.products = this.productsService.getProducts();
+    if (this.monitoredMode) {
+      this.products = this.productsService.getMonitoredProducts();
+    }
+    else {
+      this.products = this.productsService.getProducts();
+    }
 
     this.products = this.products.filter((product) => {
       return  product.nombre.toUpperCase().includes(this.searchString.toUpperCase()) ||
               product.descripcion.toUpperCase().includes(this.searchString.toUpperCase());
     });
+  }
+
+  updateMonitoredProduct(monitoredProduct) {
+    let searchedProduct = this.monitoredProducts.findIndex((product) => product.uid == monitoredProduct.uid);
+
+    if (searchedProduct == -1) {
+      if (monitoredProduct.checked == true) {
+        this.monitoredProducts.push(monitoredProduct);
+      }
+    }
+    else {
+      if (monitoredProduct.checked == false) {
+        this.monitoredProducts.splice(searchedProduct, 1);
+      }
+    }
+  }
+
+  updateMonitoredProducts() {
+    this.productsService.updateMonitoredProducts(this.monitoredProducts);
+  }
+
+  deleteProduct(productUid) {
+    this.productsService.deleteMonitoredProduct(productUid);
   }
 }

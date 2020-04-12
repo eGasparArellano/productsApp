@@ -6,14 +6,19 @@
     <button (click)="searchProducts()" class="btn btn-primary">Buscar producto</button>
   </div>
   <div class="ml-2" [hidden]="monitoredMode">
-    <a class="btn btn-success" href="#" role="button">Añadir seleccionados a monitoreados</a>
+    <button (click)="updateMonitoredProducts()" class="btn btn-success" [disabled]="!(monitoredProducts.length > 0)">Añadir seleccionados a monitoreados</button>
   </div>
 </div>
 <div class=" mt-2">
   <ul>
-    <app-product *ngFor="let product of products" [monitoredMode]="monitoredMode" [product]="product"></app-product>
+    <app-product *ngFor="let product of products" 
+      [monitoredMode]="monitoredMode" 
+      [product]="product" 
+      (monitoredProduct)="updateMonitoredProduct($event)" 
+      (delete)="deleteProduct($event)">
+    </app-product>
   </ul>
-  <div class="alert alert-danger" role="alert" [hidden]="products.length > 0">
+  <div class="alert alert-danger" role="alert" *ngIf="!(products.length > 0)">
     <strong>Ningún producto concuerda con la búsqueda</strong>
   </div>
 </div>

@@ -1,7 +1,7 @@
 <li class="border list-unstyled">
   <div class="row">
     <div class="col-1" [hidden]="monitoredMode">
-      <input type="checkbox">
+      <input type="checkbox" [(ngModel)]="monitored" (change)="updateMonitoredProduct()">
     </div>
 
     <div class="media col">
@@ -21,7 +21,7 @@
           <a name="" id="" class="btn btn-primary" href="/products/{{product.uid}}" role="button"><i class="fas fa-search"></i></a>
         </div>
         <div class="row mt-3">
-          <a name="" id="" class="btn btn-danger" href="#" role="button"><i class="fas fa-trash"></i></a>
+          <button (click)="deleteProduct()" class="btn btn-danger"><i class="fas fa-trash"></i></button>
         </div>
       </div>
     </div>

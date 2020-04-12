@@ -7,7 +7,9 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ProductsService {
   products: Product[] = [];
+  monitoredProducts = [];
   productsSubject = new BehaviorSubject<Product[]>([]);
+  monitoredProductsSubject = new BehaviorSubject<any[]>([]);
 
   constructor() {
     this.products.push(
@@ -30,4 +32,36 @@ export class ProductsService {
   getProducts() {
     return this.products.slice();
   }
+
+  getMonitoredProducts() {
+    let monitoredElements = [];
+
+    this.monitoredProducts.forEach((product) => {
+      monitoredElements.push(this.products.find(p => p.uid == product.uid));
+    });
+
+    return monitoredElements;
+  }
+
+  updateMonitoredProducts(monitoredProducts) {
+    // Update monitored list
+    this.monitoredProducts = monitoredProducts.slice();
+
+    // Propagate changes of monitored list
+    this.monitoredProductsSubject.next(this.getMonitoredProducts());
+  }
+
+  deleteProduct() {
+
+  }
+
+  deleteMonitoredProduct(uid) {
+    // Find and delete element
+    let searchedProduct = this.monitoredProducts.findIndex((product) => product.uid == uid);
+    this.monitoredProducts.splice(searchedProduct, 1);
+
+    // Propagate changes of monitored list
+    this.monitoredProductsSubject.next(this.getMonitoredProducts());
+  }
+
 }
