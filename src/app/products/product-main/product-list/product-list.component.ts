@@ -11,6 +11,7 @@ import { ProductsService } from '../../products.service';
 export class ProductListComponent implements OnInit {
   monitoredMode: boolean;
   products: Product[] = [];
+  searchString: string;
 
   constructor(private router: Router, private productsService: ProductsService) {
     // Get url
@@ -23,10 +24,17 @@ export class ProductListComponent implements OnInit {
     this.productsService.productsSubject.subscribe((newData) => {
       this.products = newData;
     });
-
   }
 
   ngOnInit(): void {
   }
 
+  searchProducts(): void {
+    this.products = this.productsService.getProducts();
+
+    this.products = this.products.filter((product) => {
+      return  product.nombre.toUpperCase().includes(this.searchString.toUpperCase()) ||
+              product.descripcion.toUpperCase().includes(this.searchString.toUpperCase());
+    });
+  }
 }

@@ -1,23 +1,19 @@
 <div class="row m-4">
   <div class="col-4">
-    <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
+    <input type="text" [(ngModel)]="searchString" (keydown.enter)="searchProducts()" class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
   </div>
   <div>
-    <a name="" id="" class="btn btn-primary" href="#" role="button">Buscar producto</a>
+    <button (click)="searchProducts()" class="btn btn-primary">Buscar producto</button>
   </div>
   <div class="ml-2" [hidden]="monitoredMode">
     <a class="btn btn-success" href="#" role="button">Añadir seleccionados a monitoreados</a>
   </div>
 </div>
-
 <div class=" mt-2">
   <ul>
     <app-product *ngFor="let product of products" [monitoredMode]="monitoredMode" [product]="product"></app-product>
   </ul>
-
-
-  <div class="alert alert-danger" role="alert">
+  <div class="alert alert-danger" role="alert" [hidden]="products.length > 0">
     <strong>Ningún producto concuerda con la búsqueda</strong>
   </div>
-
 </div>
