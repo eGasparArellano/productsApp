@@ -45,7 +45,12 @@ export class ProductsService {
 
   updateMonitoredProducts(monitoredProducts) {
     // Update monitored list
-    this.monitoredProducts = monitoredProducts.slice();
+    monitoredProducts.forEach((product) => {
+      let searchedProduct = this.monitoredProducts.find((p) => p.uid == product.uid);
+      if (searchedProduct === undefined) {
+        this.monitoredProducts.push(product);
+      }
+    });
 
     // Propagate changes of monitored list
     this.monitoredProductsSubject.next(this.getMonitoredProducts());
