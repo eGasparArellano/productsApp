@@ -7,7 +7,7 @@
     <div class="media-body">
       <div class="form-group">
         <label for="">uid (clave de producto)</label>
-        <input type="number" class="form-control" min="0" name="uid" [(ngModel)]="product.uid" required>
+        <input type="number" class="form-control" min="0" name="uid" [(ngModel)]="product.uid" [disabled]="!isNewProduct" required>
       </div>
       <div class="form-group">
         <label for="">Nombre de producto</label>

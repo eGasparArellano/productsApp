@@ -23,6 +23,10 @@ export class ProductEditComponent implements OnInit {
     // Get url
     this.isNewProduct = (this.router.url === '/products/new') ? true : false;
     this.brands = this.productsService.getProductBrands();
+
+    this.espAttribute = '';
+    this.espValue = '';
+    this.espUnit = '';
   }
 
   ngOnInit(): void {
