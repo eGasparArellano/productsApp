@@ -8,6 +8,7 @@ import { BehaviorSubject } from 'rxjs';
 export class ProductsService {
   products: Product[] = [];
   monitoredProducts = [];
+  brands: string[] = [];
   productsSubject = new BehaviorSubject<Product[]>([]);
   monitoredProductsSubject = new BehaviorSubject<any[]>([]);
 
@@ -24,6 +25,23 @@ export class ProductsService {
         new Especificacion('Peso', '2', 'Kg'),
       ])
     );
+
+    this.brands.push(
+      'LG',
+      'HP',
+      'Toshiba',
+      'Acer',
+      'Logitech',
+      'Razer',
+    );
+
+    // Propagate changes
+    this.productsSubject.next(this.getProducts());
+  }
+
+  addProduct(product) {
+    // Add product
+    this.products.push(product);
 
     // Propagate changes
     this.productsSubject.next(this.getProducts());
@@ -45,6 +63,19 @@ export class ProductsService {
 
   getProductById(uid: number): Product {
     return this.products.find((product) => product.uid == uid);
+  }
+
+  getProductBrands(): string[] {
+    return this.brands.slice();
+  }
+
+  updateProduct(product) {
+    // Update product
+    let searchedProduct = this.products.find((p) => p.uid == product.uid);
+    searchedProduct = product;
+
+    // Propagate changes
+    this.productsSubject.next(this.getProducts());
   }
 
   updateMonitoredProducts(monitoredProducts) {

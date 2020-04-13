@@ -15,10 +15,10 @@
       </div>
       <div class="media-right col-2 mt-3">
         <div class="row">
-          <a name="" id="" class="btn btn-primary" href="/products/{{product.uid}}/edit" role="button"><i class="fas fa-edit"></i></a>
+          <button class="btn btn-primary" (click)='goToEditProduct()'><i class="fas fa-edit"></i></button>
         </div>
         <div class="row mt-3">
-          <a name="" id="" class="btn btn-primary" href="/products/{{product.uid}}" role="button"><i class="fas fa-search"></i></a>
+          <button class="btn btn-primary" (click)='goToProductDetail()'><i class="fas fa-search"></i></button>
         </div>
         <div class="row mt-3">
           <button (click)="deleteProduct()" class="btn btn-danger"><i class="fas fa-trash"></i></button>

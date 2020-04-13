@@ -1,55 +1,57 @@
-<form>
+<form #productForm="ngForm" (ngSubmit)="processForm(productForm)">
+  <div class="m-4">
   <div class="media">
     <a class="d-flex align-self-bottom" href="#">
-      <img class="mr-3" src="https://picsum.photos/id/AQUÍ PONER ID/100/100" alt="Generic placeholder image">
+      <img class="mr-3" src="https://picsum.photos/id/{{product.uid}}/150/150" alt="Generic placeholder image">
     </a>
     <div class="media-body">
       <div class="form-group">
         <label for="">uid (clave de producto)</label>
-        <input type="number" class="form-control" min="0" required>
+        <input type="number" class="form-control" min="0" name="uid" [(ngModel)]="product.uid" required>
       </div>
       <div class="form-group">
         <label for="">Nombre de producto</label>
-        <input type="text" class="form-control" required>
+        <input type="text" class="form-control" name="nombre" [(ngModel)]="product.nombre" required>
+
       </div>
       <div class="form-group">
         <label for="">Marca</label>
-        <select class="form-control" name="marca">
+        <select class="form-control" [(ngModel)]="product.marca" name="marca">
           <option value="">Seleccionar una opción</option>
-          <option> </option>
+          <option *ngFor="let brand of brands">{{brand}}</option>
         </select>
       </div>
       <div class="form-group">
         <label for="">Precio</label>
-        <input type="number" class="form-control" required>
+        <input type="number" class="form-control" name="precio" [(ngModel)]="product.precio" required>
       </div>
       <div class="form-group">
         <label for="">Breve descripción</label>
-        <input type="text" class="form-control" required>
+        <input type="text" class="form-control" name="descripcion" [(ngModel)]="product.descripcion" required>
       </div>
       <div class="form-group">
         <label for="">Existencia</label>
-        <input type="number" class="form-control" required>
+        <input type="number" class="form-control" name="existencia" [(ngModel)]="product.existencia" required>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-2">
       <label for="">Atributo</label>
-      <input #v1 type="text" class="form-control">
+      <input name="espAttribute" [(ngModel)]="espAttribute" type="text" class="form-control">
     </div>
     <div class="col-2">
       <label for="">Valor</label>
-      <input #v2 type="text" class="form-control">
+      <input name="espValue" [(ngModel)]="espValue" type="text" class="form-control">
     </div>
     <div class="col-2">
       <label for="">Unidad</label>
-      <input #v3 type="text" class="form-control">
+      <input name="espUnit" [(ngModel)]="espUnit" type="text" class="form-control">
     </div>
     <div>
       <label for="" style="color:white">añadir</label>
-      <a name="" id="" class="form-control btn btn-success" href="#" role="button"> <i
-          class="fas fa-plus-circle    "></i></a>
+      <button type="button" class="form-control btn btn-success" (click)="addSpecification()"> <i
+          class="fas fa-plus-circle    "></i></button>
     </div>
   </div>
 
@@ -64,17 +66,18 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td scope="row"></td>
-          <td></td>
-          <td></td>
-          <td><button class="btn btn-primary"><i class="fas fa-trash    "></i></button></td>
+        <tr *ngFor="let esp of product.especificacion">
+          <td>{{esp.atributo}}</td>
+          <td>{{esp.valor}}</td>
+          <td>{{esp.unidad}}</td>
+          <td><button class="btn btn-primary" (click)="deleteSpecification(esp.atributo)"><i class="fas fa-trash"></i></button></td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <input type="submit" class="btn btn-primary" value="Guardar">
-  <button class="btn btn-secondary ml-3">Cancelar</button>
+  <input type="submit" class="btn btn-primary" value="Guardar" [disabled]="!productForm.valid">
+  <button type="button" (click)="cancelForm()" class="btn btn-secondary ml-3">Cancelar</button>
+</div>
 
 </form>

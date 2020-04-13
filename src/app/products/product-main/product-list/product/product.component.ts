@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Product } from 'src/app/products/Product';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product',
@@ -13,13 +14,21 @@ export class ProductComponent implements OnInit {
   @Output() delete = new EventEmitter();
   monitored: boolean;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
   updateMonitoredProduct(): void {
     this.monitoredProduct.emit({uid: this.product.uid, checked: this.monitored});
+  }
+
+  goToEditProduct() {
+    this.router.navigate(['/products/' + this.product.uid + '/edit']);
+  }
+
+  goToProductDetail() {
+    this.router.navigate(['/products/' + this.product.uid]);
   }
 
   deleteProduct() {
